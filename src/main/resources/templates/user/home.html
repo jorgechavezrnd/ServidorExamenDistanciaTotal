@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>UserProfile</title>
+    <link href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}" rel="stylesheet" media="screen"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form th:action="@{/logout}" method="get">
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="submit" class="btn btn-default">Logout</button>
+        <a th:href="${'/user/profile/'}" type="button" class="btn btn-default">Perfil</a>
+        <a th:href="${'/user/CaloriesHistory'}" type="button" class="btn btn-default">Historial de calorias</a>
+        <a th:href="${'/user/PulseHistory'}" type="button" class="btn btn-default">Historial de pulsos</a>
+        <a th:href="${'/user/StepsHistory'}" type="button" class="btn btn-default">Historial de distancias</a>
+        <a th:href="${'/user/Map'}" type="button" class="btn btn-default">Locaciones</a>
+        <a th:href="${'/user/LastLocation'}" type="button" class="btn btn-default">Ultima locacion</a>
+        <a th:href="${'/distance'}" type="button" class="btn btn-default">Distancia total</a>
+    </div>
+</form>
+<br></br>
+<br></br>
+<br></br>
+<br></br>
+<div class="container">
+
+    <script th:inline="javascript">
+        var idValue = [[${id}]];
+
+        function updateSteps(){
+            $.getJSON( "/getSteps/" + idValue, function( data ) {
+                $('#steps').html(data.steps);
+            });
+        }
+
+        function updateCalories(){
+            $.getJSON( "/getCalories/" + idValue, function( data ) {
+                $('#calories').html(data.calories);
+            });
+        }
+
+        function updateDistance(){
+            $.getJSON( "/getDistance/" + idValue, function( data ) {
+                $('#distance').html(data.distance);
+            });
+        }
+
+        function updatePulse(){
+            $.getJSON( "/getPulse/" + idValue, function( data ) {
+                $('#bpm').html(data.bpm);
+            });
+        }
+
+        setInterval(function(){
+            updateSteps();
+            updateDistance();
+            updateCalories();
+            updatePulse();
+        }, 1000);
+    </script>
+
+   <p>Pasos</p>
+    <span id="steps" class="label label-primary" th:text="${countSteps}">countSteps</span> <br/><br/>
+
+    <p>Distancia</p>
+    <span id="distance" class="label label-primary" th:text="${countDistance}">countDistance</span> <br/><br/>
+
+    <p>Calorias</p>
+    <span id="calories" class="label label-primary" th:text="${countCalories}">countCalories</span><br></br>
+
+    <p>Ritmo cardiaco</p>
+    <span id="bpm" class="label label-primary" th:text="${countBpm}">countCalories</span><br></br>
+
+</div>
+</body>
+</html>

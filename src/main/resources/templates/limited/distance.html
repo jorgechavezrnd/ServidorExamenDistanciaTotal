@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <title>Distance</title>
+</head>
+<body>
+    <form th:action="@{/user/home}" method="get">
+        <button name="registration" type="Submit">Home</button>
+    </form>
+    <h1>Distancia Total: </h1>
+    <h1 th:text="${distanciaTotal}"></h1>
+</body>
+</html>
